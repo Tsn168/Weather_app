@@ -17,11 +17,16 @@ class SeasonApp extends StatelessWidget {
           children: const [
             SeasonCard(
               country: "FRANCE",
-              seasons: ["Winter", "Spring", "Summer", "Autumn"],
+              seasons: [
+                "assets/winter.jpeg",
+                "assets/spring.jpeg",
+                "assets/summer.jpeg",
+                "assets/fall.jpeg",
+              ],
             ),
             SeasonCard(
               country: "CAMBODIA",
-              seasons: ["Dry Season", "Rainy Season"],
+              seasons: ["assets/summer.jpeg", "assets/fall.jpeg"],
             ),
           ],
         ),
@@ -43,28 +48,10 @@ class SeasonCard extends StatefulWidget {
 class _SeasonCardState extends State<SeasonCard> {
   int currentIndex = 0;
 
-  // Computed: current season name
-  String get currentSeason => widget.seasons[currentIndex];
+  String get currentSeasonImage => widget.seasons[currentIndex];
 
-  // Computed: color based on season
-  Color get cardColor {
-    switch (currentSeason) {
-      case "Winter":
-        return Colors.blue.shade300;
-      case "Spring":
-        return Colors.green.shade300;
-      case "Summer":
-        return Colors.yellow.shade400;
-      case "Autumn":
-        return Colors.orange.shade300;
-      case "Dry Season":
-        return Colors.brown.shade300;
-      case "Rainy Season":
-        return Colors.blue.shade600;
-      default:
-        return Colors.grey;
-    }
-  }
+  String get currentSeasonLabel =>
+      "Season  ${currentIndex + 1}"; // You can change to real names later
 
   void nextSeason() {
     setState(() {
@@ -80,19 +67,34 @@ class _SeasonCardState extends State<SeasonCard> {
         margin: const EdgeInsets.all(12),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: cardColor,
           borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4)],
         ),
         child: Column(
           children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image.asset(
+                currentSeasonImage,
+                height: 150,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            // --- COUNTRY NAME ---
             Text(
               widget.country,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
+
+            // --- SEASON LABEL ---
             Text(
-              currentSeason,
-              style: const TextStyle(fontSize: 18, color: Colors.white),
+              currentSeasonLabel,
+              style: const TextStyle(fontSize: 16, color: Colors.grey),
             ),
           ],
         ),
