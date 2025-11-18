@@ -50,8 +50,24 @@ class _SeasonCardState extends State<SeasonCard> {
 
   String get currentSeasonImage => widget.seasons[currentIndex];
 
-  String get currentSeasonLabel =>
-      "Season  ${currentIndex + 1}"; // You can change to real names later
+  String get currentSeasonLabel {
+    // Get the filename from the path
+    String filename = currentSeasonImage.split('/').last;
+
+    // Map filename to season name
+    switch (filename) {
+      case "winter.jpeg":
+        return "Winter";
+      case "spring.jpeg":
+        return "Spring";
+      case "summer.jpeg":
+        return "Summer";
+      case "fall.jpeg":
+        return "Fall";
+      default:
+        return "Season ${currentIndex + 1}";
+    }
+  }
 
   void nextSeason() {
     setState(() {
@@ -84,14 +100,11 @@ class _SeasonCardState extends State<SeasonCard> {
             ),
 
             const SizedBox(height: 10),
-
-            // --- COUNTRY NAME ---
             Text(
               widget.country,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
 
-            // --- SEASON LABEL ---
             Text(
               currentSeasonLabel,
               style: const TextStyle(fontSize: 16, color: Colors.grey),
